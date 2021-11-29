@@ -48,7 +48,27 @@ responser = requests.request("GET", urlroute)
 responser = str(responser.json())
 responser = responser[:responser.find("geometry")]
 
+distancei =  responser.rfind("distance:")
+durationi = responser.rfind("duration:")
+waypointsi = responser.rfind("way_points")
+
+fulldistance = str(responser[distancei:durationi-3])
+fullduration =  responser[durationi:waypointsi-3]
+print(fulldistance)
+print(fullduration)
+
 instructions = []
+count = responser.count("instruction")
+updatedtext = responser
+for _ in range(count):
+    instructi  = updatedtext.find("instruction")
+    namei =  updatedtext.find("'name'")
+    instruction = updatedtext[instructi:namei-2]
+    instructions.append(instruction)
+    updatedtext = updatedtext[namei+2:]
+    
+
+
 # try:
 #     response = amadeus.safety.safety_rated_locations.get(
 #         latitude=lat,
